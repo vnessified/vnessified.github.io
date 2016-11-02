@@ -24,50 +24,138 @@
         </header>
 
         <section id="links" class="clearfix">
-          <a href="https://github.com/vnessified" class="text-links">Vanessa Grass</a> &nbsp; | &nbsp;
-          <a href="https://github.com/vnessified" class="text-links">Source Code</a> &nbsp;
+          <a href="http://vnessified.github.io/" class="text-links" target="_blank">Vanessa Grass</a> &nbsp; | &nbsp;
+          <a href="https://github.com/vnessified/pizza_detector" class="text-links" target="_blank">Source Code</a> &nbsp;
         </section>
 
         <hr>
 
         <section id="main_content">
-          <img src="images/pizza_det.png">
+
           <h3>Problem &amp; Goals</h3>
 
 <p><h4>Introducing Pizza Detector</h4>
 Ever wonder if there is pizza in your immediate surroundings? Consider the scenario where you're at a party — you've had one too many libations and things start to get kinda fuzzy... is that pizza or seven layer dip in front of you? It can be hard to tell, right?! Or let's say you find yourself in a TGI Fridays (completely ironically of course) and order a 'BBQ Chicken Flatbread Pizza' and you ask yourself "but is this really pizza?". Maybe you are currently on an all pizza diet and you're just tired of constantly mentally assessing whether food items are pizza or not. Or maybe you just really love pizza and think it would be silly but fun to detect pizza from, well, photos of pizza.
 <br>
+<img src="images/pizza_det.png">
 <br>
 <h4>Ok but seriously...</h4>
 Jokes aside, the actual goal of this project is to first create a tool that recognizes a specific food from a single image. A longer term goal would be to recognizes many other foods and then ultimately predict calories and other nutritional info from a photo. The use cases for this are pretty self-explanatory — tracking food intake for weight loss or to manage medical conditions (ie diabetes, food allergies, etc) can be fairly labor intensive (and frankly annoying) as it usually requires manually entering nutritional info into a fitness/food tracking app. Because of this, most people don't stick with tracking their food intake for very long and this potentially can lead to weight gain and other health problems.</p>
 
 <h3>Data Source</h3>
 
-<p>We’ve crafted some handsome templates for you to use. Go ahead and click 'Continue to layouts' to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved.</p>
+<p>The images in the data source were downloaded from another image recognition project,
+  <a href="https://www.vision.ee.ethz.ch/datasets_extra/food-101/" target="_blank">The Food-101 Data Set</a>, and incorporate additional images from yet another image recognition project, <a href="http://image-net.org/synset?wnid=n07873807" target="_blank">ImageNet</a>.
+From these data sources, I create two sets of images — 2,000 images of pizza and 2,000 images of non pizza food items. Within each set I use 1,600 images to "teach" the model what pizza looks like and then use the other 400 unseen images to test whether the model has in fact learned what pizza looks like.</p>
+
+  <img src="images/traintest.png">
+  <br>
 
 <h3>Data Cleaning &amp; Manipulation</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>Because the data is all image based in the form of pixels (which are the smallest unit of information that make up an image on a digital display), the concept of "cleaning" the data isn't really applicable. I do adjust for differences in lighting and resize all the images to have the same dimensions. I also explore aspects of color in the pizza versus non pizza images. This required some data manipulation to extract the information in the images pixels.</p>
 
 <h3>Exploratory Data Analysis</h3>
 
-<p>You can @mention a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor’s GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>Below I explore the relationship between color, hue, saturation, and brightness in the pizza versus non pizza images.
+<br>
+<h4> RGB color space</h4>
+Color images displayed on digital devices are made of up 3 colors — red, green, and blue. Every pixel in an image will consist of each color in some proportion to make up millions of different color combinations. For example, looking at the image of pizza below, the image can be separated into its red, green, and blue color components.
+<br>
+<br>
+<img src="images/pizza.png" width="300">
+<br>
+<img src="images/pizza_rgb.png">
+<br>
+
+To see if color is a good predictor of pizza, I looked at the red, green, and blue color components of all the pizza images versus all the non pizza images. Seeing as the plots below look nearly identical, it's fair to say color is not a good predictor of pizza.
+
+<br>
+<br>
+<img src="images/rgb_dist_pizza.png">
+<br>
+<img src="images/rgb_dist_non_pizza.png">
+<br>
+<h4>HSV color space</h4>
+I also looked at another color space — HSV which stands for hue, saturation, and value — also called HSB (B for brightness). Because HSV separates color (hue) information from intensity (saturation) and lighting (value) it's often used because the information is less noisy than RGB information (since most of the noise is from differences in light). An example of what this color space looks like:
+<br>
+<br>
+<img src="images/hsv.png" width="300">
+<br>
+Along the same lines as the red, green, and blue color exploration above, I compared the hue, saturation, and brightness in pizza versus non pizza images to see if there is any differences — and like before, there is really no difference.
+<br>
+<br>
+Overall the EDA, albeit pretty surface level, conveys that recognizing objects in images based on pixels, essentially imitating the highly granular functionality of human eye and brain, can't really be based on something as simple as color alone and supports the use of a more complex modeling technique.
+</p>
 
 <h3>Image Preprocessing</h3>
 
-<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
+<p>The goal with this preprocessing is to apply random transformations to the images so the model is able to "learn" instead of purely memorize the pixels in the images. For example, if you only showed your model images of pizza with the crust oriented left, the model may not be able to properly detect images of pizza with the crust oriented right.
+  <br>
+  <br>
+<img src="images/pizzas_flip.png" width="500">
+<br>
+Doing this allows the model to account for natural variation in orientation, rotation, perspective, etc in the images by randomly flipping and rotating the images during the model's learning phase. Below is an example of what these transformations look like.
+<br>
+<br>
+<img src="images/rand_transformations.png">
+<br>
+</p>
 
 <h3>Model</h3>
 
-<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
+<p>Recognizing pizza in an image is difficult because the same object can vary in position, angles, lighting, etc. Part of the image can be hidden as well as there is background clutter to deal with. With all this information being represented in the image, using more simple modeling techniques that look at individual pixels as features in isolation won't work.
+  <br>
+  <br>
+What you really need to recognize pizza an image is a way to understand and retain the information on the relationship between pixels in a more flexible way. A convolutional neural network (CNN) matches small parts of the image, over and over again, to in effect create a library of all the possible distinctive features that make up pizza in a way that's independent of the object's/pizza's orientation in space.
+<br>
+<br>
+<img src="images/pizza_cnn.png" width="400">
+<br>
+The whole process can be visualized as series of steps (really a stack of layers) that is repeated many times. For the sake of simplicity, the convolutional layer essentially creates many snapshots of the different possible key features in identifying pizza. There's an intermediary layer (ReLU) that performs a mathematical operation that keeps the feature’s voting strength on an appropriate scale. The pooling layer takes the many possible features created in the convolutional layers and shrinks them down to only the most significant features. The final step (layer) is the voting step, where key features in the image vote to determine whether the image contains pizza.
+<br>
+<br>
+<img src="images/cnn_layers.png">
+<br>
+</p>
+
 
 <h3>Results</h3>
 
-<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
+<p>The model is able to detect pizza in the test/validation images with 88% accuracy which is pretty decent considering the relatively small amount of images the model is trained on.
+
+  <br>
+  <h4> The learning process</h4>
+  Something interesting to note with neural networks is that they are trained over many "epochs" which are essentially learning cycles. More specifically, when the neural network is initially presented with an image it makes a random guess as to whether or not it is an image of pizza. It then sees how far its answer was from the actual one and makes the appropriate adjustments to the network/model. This process can be visualized in the plots below, where the accuracy increases after each epoch while the loss (error) decreases. The sharp jump around epoch 50 is where the model made a large error (for example, misjudged a non pizza image for pizza).
+  <br>
+  <br>
+  <img src="images/epochs.png">
+  <br>
+  <h4> ROC curve</h4>
+  The ROC curve is a fairly standard plot that illustrates the ability of a model to separate two classes. This plot shows when the actual class is pizza, how often does the model predict pizza (y-axis) versus when the actual class is not pizza, how often does the model incorrectly predict pizza (x-axis). A model that does a good job separating classes will have a curve that hugs the upper left corner — meaning ratio of often the model is right vs wrong is better than simply guessing.
+  <br>
+  <br>
+  <img src="images/roc.png">
+  <br>
+  <h4> Misclassified vs most "Pizza" images</h4>
+  Below are images the model predicted with the highest probability to be pizza but that are in fact not pizza as well as images the model predicted with the highest probability to be pizza and are actually pizza. Some of the misclassified images are a bit perplexing (the donuts) as to why the model may have labeled them pizza but others (far right in worst pizza predictions... some sort of meat it appears) are more understandable in their potential "pizza" resemblance. The images the model predicted with the highest probability to be pizza and are pizza are fairly canonical pizza imagesand it's cool that the model can even detect uncooked pizza (far right image in best pizza predictions).
+  <br>
+  <br>
+  <img src="images/worst_pizza.png">
+  <br>
+  <img src="images/best_pizza.png">
+  <br>
+</p>
 
 <h3>Summary</h3>
 
-<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
+<p>Convolutional neural networks are the best way to solve this problem. Attempting to build a pizza detector with simpler modeling methods would be very challenging. Overall, the model performs well with 88% accuracy on detecting pizza in an image. I could continue to tune the model layers and/or make tweaks to the random transformations to see what improvements I can make.
+<br>
+<br>
+I suspect there is some overfitting (ie the model is memorizing to some extent) because my pool of images is rather small. Ideally I'd like to train the model on hundreds of thousands of photos. But in practice I don't think this is necessarily a good learning exercise as pre-trained models exist, which have been trained on literally millions of images. Another area of improvement is a more comprehensive exploration of the images as a dataset — aspects to explore in the image data are expanding on color (ie variance in color), texture, shape, etc. Visualizing what features the network is identifying as important in detecting pizza would also be interesting. I'd also like to expand on the results section, for example, looking at misclassified images to try to discover patterns there.
+<br>
+<br>
+In terms of next steps — I really like to expand on this and explore building the image-based calorie predictor. I think using a pre-trained model is really the only feasible way to go about this. From there, other issues such as estimating food quantity in the image is another challenge to figure out.</p>
 
 
 
