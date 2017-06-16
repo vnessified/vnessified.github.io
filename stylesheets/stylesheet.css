@@ -57,7 +57,7 @@ body {
 }
 
 a {
-  color: #C97026;
+  color: #8ABAB1;
 }
 a:hover {
   color: #DF8F4D;
@@ -82,7 +82,7 @@ header h1 {
   font-family: 'Hind Siliguri', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 50px; font-weight: 900;
   line-height: 1.2;
-  color: #A11216;
+  color: #8ABAB1;
   letter-spacing: -1px;
 	text-align: center;
 	margin-bottom: 10px;
@@ -287,7 +287,7 @@ h3 {
   margin-bottom: 8px;
   font-size: 20px;
   font-weight: 600;
-  color: #C7262A;
+  color: #8ABAB1;
 }
 
 h4 {
