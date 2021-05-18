@@ -16,6 +16,7 @@ time, mark, audio, video {
   outline: 0;
   vertical-align: baseline;
   background: transparent;
+
 }
 
 html, body {
@@ -29,6 +30,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, nav, sectio
 
 audio, canvas, video {
   display: inline-block;
+  width: 100%;
+  height: 100%;
 
 }
 
@@ -251,6 +254,7 @@ h1 {
 
 h2 {
   font-size: 2em;
+  line-height: 2.25;
 }
 
 h3 {
@@ -394,10 +398,11 @@ header:after {
   }
 }
 header #logo-container {
-  float: left;
+  /*float: left;*/
   display: block;
+  margin: auto;
 
-  margin-right: 2.35765%;
+  /*margin-right: 2.35765%;*/
   width: 100%;
 }
 header #logo-container:last-child {
@@ -560,10 +565,10 @@ header nav ul li a.bordered {
   clear: both;
 }
 #content section.intro {
-  max-width: 68em;
+  max-width: 66em;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 5em;
+  margin-bottom: 2em;
 }
 #content section.intro:after {
   content: "";
@@ -598,7 +603,7 @@ header nav ul li a.bordered {
   }
 }
 #content section.intro p {
-  font-size: 1.7em;
+  font-size: 1.5em;
   line-height: 1.5em;
   letter-spacing: 0.02em;
 }
@@ -723,6 +728,38 @@ header nav ul li a.bordered {
   -webkit-transform-style: preserve-3d;
 
 }
+.div_float {
+}
+.left_float {
+  width: 49%;
+  width: calc(50% - 12px);
+
+  /*margin-right: 10px;*/
+  /*display: inline;*/
+  /*width: calc(50% - 12px);*/
+  /*margin: auto;*/
+  float: left;
+  /*-webkit-transform-style: preserve-3d;*/
+
+
+}
+.right_float {
+  width: 49%;
+  width: calc(50% - 12px);
+
+  /*display: inline;*/
+  /*width: calc(50% - 12px);*/
+  /*margin: auto;*/
+  float: right;
+  /*-webkit-transform-style: preserve-3d;*/
+
+}
+
+
+#content .photo-grid video.col-2 {
+
+}
+
 
 #content .photo-grid a.col-2 {
   width: 49%;
@@ -759,6 +796,20 @@ header nav ul li a.bordered {
   transform: none;
   opacity: 1;
 }*/
+
+
+
+
+.headline {
+  text-transform: uppercase;
+  font-size: 1.125em;
+  font-weight: bold;
+  color: #c8c9c9;
+  margin-top: 0.5em;
+  line-height: 1.5em;
+  
+}
+
 
 .projectlinks {font-size: 1.2em;
   line-height: .75em;}
