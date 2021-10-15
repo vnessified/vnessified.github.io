@@ -1,3 +1,3 @@
 # vnessified.github.io
 
-(https://vanessagrass.com/)
+https://vanessagrass.com/
