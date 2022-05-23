@@ -46,7 +46,7 @@ Jokes aside, the actual goal of this project is to first create a tool that reco
 
 <p>The images in the data source were downloaded from another image recognition project,
   <a href="https://www.vision.ee.ethz.ch/datasets_extra/food-101/" target="_blank">The Food-101 Data Set</a>, and incorporate additional images from yet another image recognition project, <a href="http://image-net.org/synset?wnid=n07873807" target="_blank">ImageNet</a>.
-From these data sources, I create two sets of images — 2,000 images of pizza and 2,000 images of non pizza food items. Within each set, I use 1,600 images to "teach" the model what pizza looks like and then use the other 400 unseen images to test whether the model has in fact learned what pizza looks like.</p>
+From these data sources, I create two sets of images — 2,000 images of pizza and 2,000 images of non pizza food items. Within each set, I use 1,600 images to "teach" the model what pizza looks like and then use the other 400 unseen images to test whether the model has actually learned what pizza looks like.</p>
 
   <img src="images/traintest.png">
   <br>
@@ -145,7 +145,7 @@ The whole process can be visualized as a series of steps (really a stack of laye
   <br>
   <br>
   <h4> Misclassified vs most "pizza" images</h4>
-  Below are images the model predicted with the highest probability to be pizza but that are in fact not pizza, as well as images the model predicted with the highest probability to be pizza and are actually pizza. Some of the misclassified images are a bit perplexing (the donuts) as to why the model may have labeled them pizza but others (far right in worst pizza predictions... some sort of meat topping?) are more understandable in their potential "pizza" resemblance. The images the model predicted with the highest probability to be pizza and are pizza are fairly canonical pizza images and it's cool that the model can even detect uncooked pizza (far right image in best pizza predictions).
+  Below are images the model predicted with the highest probability to be pizza but that are, in fact, not pizza, as well as images the model predicted with the highest probability to be pizza and are actually pizza. Some of the misclassified images are a bit perplexing (the donuts) as to why the model may have labeled them pizza but others (far right in worst pizza predictions... some sort of meat topping?) are more understandable in their potential "pizza" resemblance. The images the model predicted with the highest probability to be pizza and are pizza are fairly canonical pizza images and it's cool that the model can even detect uncooked pizza (far right image in best pizza predictions).
   <br>
   <br>
   <img src="images/worst_pizza.png">
