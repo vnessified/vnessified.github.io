@@ -46,21 +46,21 @@ Jokes aside, the actual goal of this project is to first create a tool that reco
 
 <p>The images in the data source were downloaded from another image recognition project,
   <a href="https://www.vision.ee.ethz.ch/datasets_extra/food-101/" target="_blank">The Food-101 Data Set</a>, and incorporate additional images from yet another image recognition project, <a href="http://image-net.org/synset?wnid=n07873807" target="_blank">ImageNet</a>.
-From these data sources, I create two sets of images — 2,000 images of pizza and 2,000 images of non pizza food items. Within each set I use 1,600 images to "teach" the model what pizza looks like and then use the other 400 unseen images to test whether the model has in fact learned what pizza looks like.</p>
+From these data sources, I create two sets of images — 2,000 images of pizza and 2,000 images of non pizza food items. Within each set, I use 1,600 images to "teach" the model what pizza looks like and then use the other 400 unseen images to test whether the model has in fact learned what pizza looks like.</p>
 
   <img src="images/traintest.png">
   <br>
 
 <h3>Data Cleaning &amp; Manipulation</h3>
 
-<p>Because the data is all image based in the form of pixels (which are the smallest unit of information that make up an image on a digital display), the concept of "cleaning" the data isn't really applicable. I do adjust for differences in lighting and resize all the images to have the same dimensions. I also explore aspects of color in the pizza versus non pizza images. This required some data manipulation to extract the information in the images pixels.</p>
+<p>Because the data is all image based in the form of pixels (which are the smallest unit of information that make up an image on a digital display), the concept of "cleaning" the data isn't really applicable. I do adjust for differences in lighting and resize all the images to have the same dimensions. I also explore aspects of color in the pizza versus non pizza images. This required some data manipulation to extract the information in the pixels of the images.</p>
 
 <h3>Exploratory Data Analysis</h3>
 
 <p>Below I explore the relationship between color, hue, saturation, and brightness in the pizza versus non pizza images.
 <br>
 <h4> RGB color space</h4>
-Color images displayed on digital devices are made of up 3 colors — red, green, and blue. Every pixel in an image will consist of each color in some proportion to make up millions of different color combinations. For example, looking at the image of pizza below, the image can be separated into its red, green, and blue color components.
+Color images displayed on digital devices are made of up of three colors — red, green, and blue. Every pixel in an image will consist of each color in some proportion to make up millions of different color combinations. For example, looking at the image of pizza below, the image can be separated into its red, green, and blue color components.
 <br>
 <br>
 <img src="images/pizza.png" width="300">
@@ -82,19 +82,19 @@ I also looked at another color space — HSV which stands for hue, saturation, a
 <br>
 <img src="images/hsv.png" width="300">
 <br>
-Along the same lines as the red, green, and blue color exploration above, I compared the hue, saturation, and brightness in pizza versus non pizza images to see if there is any differences — and like before, there is really no difference.
+Along the same lines as the red, green, and blue color exploration above, I compared the hue, saturation, and brightness in pizza versus non pizza images to see if there are any differences — and like before, there is really no difference.
 <br>
 <br>
 <img src="images/hsv_dist_pizza.png">
 <br>
 <img src="images/hsv_dist_non_pizza.png">
 <br>
-Overall the EDA, albeit pretty surface level, conveys that recognizing objects in images based on pixels, essentially imitating the highly granular functionality of human eye and brain, can't really be based on something as simple as color alone and supports the use of a more complex modeling technique.
+Overall the EDA, albeit pretty surface level, conveys that recognizing objects in images based on pixels, essentially imitating the highly granular functionality of the human eye and brain, can't really be based on something as simple as color alone and supports the use of a more complex modeling technique.
 </p>
 
 <h3>Image Preprocessing</h3>
 
-<p>The goal with this preprocessing is to apply random transformations to the images so the model is able to "learn" instead of purely memorize the pixels in the images. For example, if you only showed your model images of pizza with the crust oriented left, the model may not be able to properly detect images of pizza with the crust oriented right.
+<p>The goal of this preprocessing is to apply random transformations to the images so the model can "learn" instead of purely memorizing the pixels in the images. For example, if the model only saw images of pizza with the crust oriented left, the model may not be able to properly detect images of pizza with the crust oriented right.
   <br>
   <br>
 <img src="images/pizzas_flip.png" width="500">
@@ -116,7 +116,7 @@ What you really need to recognize pizza an image is a way to understand and reta
 <br>
 <img src="images/pizza_cnn.png" width="400">
 <br>
-The whole process can be visualized as series of steps (really a stack of layers) that is repeated many times. For the sake of simplicity, the convolutional layer essentially creates many snapshots of the different possible key features in identifying pizza. There's an intermediary layer (ReLU) that performs a mathematical operation that keeps the feature’s voting strength on an appropriate scale. The pooling layer takes the many possible features created in the convolutional layers and shrinks them down to only the most significant features. The final step (layer) is the voting step, where key features in the image vote to determine whether the image contains pizza.
+The whole process can be visualized as a series of steps (really a stack of layers) that are repeated many times. For the sake of simplicity, the convolutional layer essentially creates many snapshots of the different possible key features in identifying pizza. There's an intermediary layer (ReLU) that performs a mathematical operation that keeps the feature’s voting strength on an appropriate scale. The pooling layer takes the many possible features created in the convolutional layers and shrinks them down to only the most significant features. The final step (layer) is the voting step, where key features in the image vote to determine whether the image contains pizza.
 <br>
 <br>
 <img src="images/cnn_layers.png">
@@ -138,14 +138,14 @@ The whole process can be visualized as series of steps (really a stack of layers
   <br>
   <br>
   <h4> ROC curve</h4>
-  The ROC curve is a fairly standard plot that illustrates the ability of a model to separate two classes. This plot shows when the actual class is pizza, how often does the model predict pizza (y-axis) versus when the actual class is not pizza, how often does the model incorrectly predict pizza (x-axis). A model that does a good job separating classes will have a curve that hugs the upper left corner — meaning ratio of often the model is right vs wrong is better than simply guessing.
+  The ROC curve is a fairly standard plot that illustrates the ability of a model to separate two classes. This plot shows when the actual class is pizza, how often does the model predict pizza (y-axis) versus when the actual class is not pizza, how often does the model incorrectly predict pizza (x-axis). A model that does a good job separating classes will have a curve that hugs the upper left corner — meaning the ratio of often the model is right vs wrong is better than simply guessing.
   <br>
   <br>
   <img src="images/roc.png">
   <br>
   <br>
   <h4> Misclassified vs most "Pizza" images</h4>
-  Below are images the model predicted with the highest probability to be pizza but that are in fact not pizza as well as images the model predicted with the highest probability to be pizza and are actually pizza. Some of the misclassified images are a bit perplexing (the donuts) as to why the model may have labeled them pizza but others (far right in worst pizza predictions... some sort of meat it appears) are more understandable in their potential "pizza" resemblance. The images the model predicted with the highest probability to be pizza and are pizza are fairly canonical pizza images and it's cool that the model can even detect uncooked pizza (far right image in best pizza predictions).
+  Below are images the model predicted with the highest probability to be pizza but that are in fact not pizza, as well as images the model predicted with the highest probability to be pizza and are actually pizza. Some of the misclassified images are a bit perplexing (the donuts) as to why the model may have labeled them pizza but others (far right in worst pizza predictions... some sort of meat topping?) are more understandable in their potential "pizza" resemblance. The images the model predicted with the highest probability to be pizza and are pizza are fairly canonical pizza images and it's cool that the model can even detect uncooked pizza (far right image in best pizza predictions).
   <br>
   <br>
   <img src="images/worst_pizza.png">
@@ -156,13 +156,13 @@ The whole process can be visualized as series of steps (really a stack of layers
 
 <h3>Summary</h3>
 
-<p>Convolutional neural networks are the best way to solve this problem. Attempting to build a pizza detector with simpler modeling methods would be very challenging. Overall, the model performs well with 88% accuracy on detecting pizza in an image. I could continue to tune the model layers and/or make tweaks to the random transformations to see what improvements I can make.
+<p>Convolutional neural networks are the best way to solve this problem. Attempting to build a pizza detector with simpler modeling methods would be very challenging. Overall, the model performs well with 88% accuracy in detecting pizza in an image. I could continue to tune the model layers and/or make tweaks to the random transformations to see what improvements I can make.
 <br>
 <br>
-I suspect there is some overfitting (ie the model is memorizing to some extent) because my pool of images is rather small. Ideally I'd like to train the model on hundreds of thousands of photos. But in practice I don't think this is necessarily a good learning exercise as pre-trained models exist, which have been trained on literally millions of images. Another area of improvement is a more comprehensive exploration of the images as a dataset — aspects to explore in the image data are expanding on color (ie variance in color), texture, shape, etc. Visualizing what features the network is identifying as important in detecting pizza would also be interesting. I'd also like to expand on the results section, for example, looking at misclassified images to try to discover patterns there.
+I suspect there is some overfitting (ie the model is memorizing to some extent) because my pool of images is rather small. Ideally, I'd like to train the model on hundreds of thousands of photos. But in practice, I don't think this is necessarily a good learning exercise as pre-trained models exist, which have been trained on literally millions of images. Another area of improvement is a more comprehensive exploration of the images as a dataset — aspects to explore in the image data are expanding on color (ie variance in color), texture, shape, etc. Visualizing what features the network is identifying as important in detecting pizza would also be interesting. I'd also like to expand on the results section, for example, looking at misclassified images to try to discover patterns there.
 <br>
 <br>
-In terms of next steps — I really like to expand on this and explore building the image-based calorie predictor. I think using a pre-trained model is really the only feasible way to go about this. From there, other issues such as estimating food quantity in the image is another challenge to figure out.</p>
+In terms of next steps — I would like to expand on this and explore building the image-based calorie predictor. I think using a pre-trained model is the only feasible way to go about this. From there, other issues such as estimating food quantity in the image is another challenge to figure out.</p>
 
 
 
