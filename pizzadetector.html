@@ -34,7 +34,7 @@
           <h3>Problem &amp; Goals</h3>
 
 <p><h4>Introducing the Pizza Detector</h4>
-Ever wonder if there is pizza in your immediate surroundings? Consider the scenario where you're at a party — you've had one too many libations and things start to get kinda fuzzy... is that pizza or seven layer dip in front of you? It can be hard to tell, right?! Or let's say you find yourself in a TGI Fridays (completely ironically of course) and order a 'BBQ Chicken Flatbread Pizza' and you ask yourself "but is this really pizza?". Maybe you are currently on an all pizza diet and you're just tired of constantly mentally assessing whether food items are pizza or not. Or maybe you just really love pizza and think it would be silly but fun to detect pizza from, well, photos of pizza.
+Ever wonder if there is pizza in your immediate surroundings? Consider the following scenario — you're at a party and you've had one too many libations. Things start to get kinda fuzzy... is that pizza or seven layer dip in front of you? It can be hard to tell, right?! Or let's say you find yourself in a TGI Fridays (completely ironically of course) and order a 'BBQ Chicken Flatbread Pizza' and you ask yourself "but is this really pizza?". Maybe you are currently on an all pizza diet and you're just tired of constantly mentally assessing whether food items are pizza or not. Or maybe you just really love pizza and think it would be silly but fun to detect pizza from, well, photos of pizza.
 <br>
 <img src="images/pizza_det.png">
 <br>
@@ -98,7 +98,7 @@ Overall the EDA, albeit pretty surface level, conveys that recognizing objects i
   <br>
 <img src="images/pizzas_flip.png" width="500">
 <br>
-Doing this allows the model to account for natural variation in orientation, rotation, perspective, etc in the images by randomly flipping and rotating the images during the model's learning phase. Below is an example of what these transformations look like.
+Doing this allows the model to account for natural variation in orientation, rotation, perspective, etc in the images by randomly flipping and rotating the images during the model's learning phase. Below is an example of what these transformations look like:
 <br>
 <br>
 <img src="images/rand_transformations.png">
@@ -110,7 +110,7 @@ Doing this allows the model to account for natural variation in orientation, rot
 <p>Recognizing pizza in an image is difficult because the same object can vary in position, angles, lighting, etc. Part of the image can be hidden as well as there is background clutter to deal with. With all this information being represented in the image, using more simple modeling techniques that look at individual pixels as features in isolation won't work.
   <br>
   <br>
-What you really need to recognize pizza an image is a way to understand and retain the information on the relationship between pixels in a more flexible way. A convolutional neural network (CNN) matches small parts of the image, over and over again, to in effect create a library of all the possible distinctive features that make up pizza in a way that's independent of the object's/pizza's orientation in space.
+To recognize pizza an image what you really need is a way to understand and retain the information on the relationship between pixels in a more flexible way. A convolutional neural network (CNN) matches small parts of the image, over and over again, to in effect create a library of all the possible distinctive features that make up pizza in a way that's independent of the object's/pizza's orientation in space.
 <br>
 <br>
 <img src="images/pizza_cnn.png" width="400">
