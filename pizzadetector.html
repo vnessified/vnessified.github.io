@@ -39,12 +39,12 @@ Ever wonder if there is pizza in your immediate surroundings? Consider the follo
 <img src="images/pizza_det.png">
 <br>
 <h4>Okay but seriously...</h4>
-Jokes aside, the actual goal of this project is to first create a tool that recognizes a specific food from a single image. A longer-term goal would be to recognize many other foods and then ultimately predict calories and other nutritional information from a photo. The use cases for this are pretty self-explanatory — tracking food intake for weight loss or to manage medical conditions (i.e. diabetes, food allergies, etc.) can be fairly labor intensive (and frankly annoying) as it usually requires manually entering nutritional information into a food tracking app. Because of this, most people don't stick with tracking their food intake for very long. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5568610/" target="_blank">Studies</a> show tracking food intake can potentially lead to long-term weight loss success, improving related health problems. An app that calculates nutritional information from photos of food would make the tracking process much easier and fun, thus increasing the odds people adhere to tracking their food intake long term.</p>
+Jokes aside, the actual goal of this project is to first create a tool that recognizes a specific food from a single image. A longer-term goal would be to recognize many other foods and then ultimately predict calories and other nutritional information from a photo. The use cases for this are pretty self-explanatory — tracking food intake for weight loss or managing medical conditions (i.e. diabetes, food allergies, etc.) can be fairly labor intensive (and frankly annoying) as it usually requires manually entering nutritional information into a food tracking app. Because of this, most people don't stick with tracking their food intake for very long. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5568610/" target="_blank">Studies</a> show tracking food intake can potentially lead to long-term weight loss success, improving related health problems. An app that calculates nutritional information from photos of food would make the tracking process much easier and fun, thus increasing the odds people adhere to tracking their food intake long term.</p>
 
 <h3>Data Source</h3>
 
-<p>The images in the dataset were downloaded from another image recognition project, The Food-101 Data Set, and incorporate additional images from yet another image recognition project, ImageNet.
-From these data sources, I created two sets of images — 2,000 images of pizza and 2,000 images of non-pizza food items. Within each set, I used 1,600 images to "teach" the model what pizza looks like and then use the other 400 unseen images to test whether the model has actually learned what pizza looks like.</p>
+<p>The images in the dataset were downloaded from another image recognition project, The Food-101 Data Set, and incorporated additional images from yet another image recognition project, ImageNet.
+From these data sources, I created two sets of images — 2,000 images of pizza and 2,000 images of non-pizza food items. Within each set, I used 1,600 images to "teach" the model what pizza looks like and then use the other 400 unseen images to test whether the model has truly learned what pizza looks like.</p>
 
   <img src="images/traintest.png">
   <br>
@@ -87,7 +87,7 @@ Along the same lines as the red, green, and blue color exploration above, I comp
 <br>
 <img src="images/hsv_dist_non_pizza.png">
 <br>
-Overall the exploratory data analysis conveys that recognizing objects in images based on pixels, essentially imitating the highly granular functionality of the human eye and brain, can't really be based on something as simple as color alone and supports the use of a more complex modeling technique.
+Overall the exploratory data analysis conveys that recognizing objects in images based on pixels, essentially imitating the highly granular functionality of the human eye and brain, can't be based on something as simple as color alone and supports the use of a more complex modeling technique.
 </p>
 
 <h3>Image Preprocessing</h3>
@@ -128,7 +128,7 @@ The whole process can be visualized as a series of steps (really a stack of laye
 
   <br>
   <h4> The learning process</h4>
-  Something interesting of note when it comes to neural networks is that they are trained over many "epochs" which are essentially learning cycles. More specifically, when the neural network is initially presented with an image it makes a random guess as to whether or not it is an image of pizza. It then sees how far this guess was from the actual answer and makes the appropriate adjustments to the network/model. This process can be visualized in the plots below, where the accuracy increases after each epoch while the loss (error) decreases. The sharp jump around epoch 50 is where the model made a large error (for example, misclassified a non-pizza image as pizza).
+  Something interesting to note when it comes to neural networks is that they are trained over many "epochs" which are essentially learning cycles. More specifically, when the neural network is initially presented with an image it makes a random guess as to whether or not it is an image of pizza. It then sees how far this guess was from the actual answer and makes the appropriate adjustments to the network/model. This process can be visualized in the plots below, where the accuracy increases after each epoch while the loss (error) decreases. The sharp jump around epoch 50 is where the model made a large error (for example, misclassified a non-pizza image as pizza).
   <br>
   <br>
   <img src="images/epochs.png">
@@ -136,7 +136,7 @@ The whole process can be visualized as a series of steps (really a stack of laye
   <br>
   <br>
   <h4>Receiver Operating Characteristic (ROC) curve</h4>
-  The ROC curve is a fairly standard plot that illustrates the ability of a model to separate two classes. This plot shows when the actual class is pizza, how often does the model predict pizza (the true positive rate on the y-axis) versus when the actual class is not pizza, how often does the model incorrectly predict pizza (the false positive rate on the x-axis). A model that does a good job separating classes will have a curve that hugs the upper left corner — depicting the ratio of how often the model is right versus wrong is better than simply guessing.
+  The ROC curve is a fairly standard plot that illustrates the ability of a model to separate two classes. This plot shows when the actual class is pizza, how often the model predict pizza (the true positive rate on the y-axis) versus when the actual class is not pizza, how often the model incorrectly predict pizza (the false positive rate on the x-axis). A model that does a good job separating classes will have a curve that hugs the upper left corner — depicting the ratio of how often the model is right versus wrong is better than simply guessing.
   <br>
   <br>
   <img src="images/roc.png">
