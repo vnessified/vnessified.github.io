@@ -154,13 +154,14 @@ The whole process can be visualized as a series of steps (really a stack of laye
 
 <h3>Summary</h3>
 
-<p>Convolutional neural networks are currently the best way to solve AI image classification problems. Attempting to build a pizza detector with simpler modeling methods would be very challenging. Overall, the model performs very well, with an 88% accuracy in detecting pizza in an image. To further improve model performance, the model layers could be fine-tuned and additional tweaks to the random transformations could be made.
+<p>Convolutional neural networks are currently the best way to solve AI image classification problems. Attempting to build a pizza detector with simpler modeling methods would be very challenging. Overall, the model performs very well, with an 88% accuracy in detecting pizza in an image. To further improve model performance, the model layers could be fine-tuned and additional tweaks to the random transformations of the training set could be made to better equip the model to handle the natural variances in images of pizza.
 <br>
 <br>
 I suspect there is some overfitting (i.e. the model is memorizing the data to some extent) because my pool of images is rather small. Ideally, the model would be trained on hundreds of thousands of photos. But in practice, this is unnecessary as other pre-trained image classification models exist, which have been trained on millions of images. Another area of improvement is a more comprehensive exploration of the images in the dataset — aspects to explore in the image data are expanding on color (i.e. variance in color), texture, shape, etc. Visualizing what features the network is identifying as important in detecting pizza would also be interesting. Furthering this idea, for example, would be to more deeply examine misclassified images to try to discover patterns to illuminate how pizza in images can better be detected.
 <br>
 <br>
 For building the image-based calorie predictor, using a pre-trained model is the only feasible way to go about this. From there, other issues such as estimating food quantity in the image is another large challenge to overcome.</p>
+ 
 
 
 
